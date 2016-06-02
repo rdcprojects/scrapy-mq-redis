@@ -31,20 +31,20 @@ Note: Will be adding automatic queue creation soon.
 ```
 # Enables scheduling storing requests queue in rabbitmq.
 
-SCHEDULER = "scrapy_rabbitmq.scheduler.Scheduler"
+SCHEDULER = "scrapy_mq_redis.scheduler.Scheduler"
 
 # Don't cleanup rabbitmq queues, allows to pause/resume crawls.
 SCHEDULER_PERSIST = True
 
 # Schedule requests using a priority queue. (default)
-SCHEDULER_QUEUE_CLASS = 'scrapy_rabbitmq.queue.SpiderQueue'
+SCHEDULER_QUEUE_CLASS = 'scrapy_mq_redis.queue.SpiderQueue'
 
 # Provide host and port to RabbitMQ daemon
 RABBITMQ_CONNECTION_PARAMETERS = {'host': 'localhost', 'port': 6666}
 
 # Store scraped item in rabbitmq for post-processing.
 ITEM_PIPELINES = {
-    'scrapy_rabbitmq.pipelines.RabbitMQPipeline': 1
+    'scrapy_mq_redis.pipelines.RabbitMQPipeline': 1
 }
 
 REDIS_HOST = '192.168.1.200'

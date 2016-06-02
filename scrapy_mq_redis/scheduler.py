@@ -8,7 +8,7 @@ from scrapy_redis.dupefilter import RFPDupeFilter
 # default values
 SCHEDULER_PERSIST = False
 QUEUE_KEY = '%(spider)s:requests'
-QUEUE_CLASS = 'scrapy_rabbitmq.queue.SpiderQueue'
+QUEUE_CLASS = 'scrapy_mq_redis.queue.SpiderQueue'
 DUPEFILTER_KEY = '%(spider)s:dupefilter'
 IDLE_BEFORE_CLOSE = 0
 LOGGER = logging.getLogger(__name__)
