@@ -58,7 +58,7 @@ REDIS_PORT = 6379
 
 ```
 from scrapy.contrib.spiders import CrawlSpider
-from scrapy_rabbitmq.spiders import RabbitMQMixin
+from scrapy_mq_redis.spiders import RabbitMQMixin
 
 class MultiDomainSpider(RabbitMQMixin, CrawlSpider):
     name = 'multidomain'
