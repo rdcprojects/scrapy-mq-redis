@@ -52,15 +52,14 @@ REDIS_PORT = 6379
 
 ```
 
-### Step 2: Add RabbitMQMixin to Spider.
+### Step 2: Add RabbitMQSpider to Spider.
 
 #### Example: multidomain_spider.py
 
 ```
-from scrapy.contrib.spiders import CrawlSpider
-from scrapy_mq_redis.spiders import RabbitMQMixin
+from scrapy_mq_redis.spiders import RabbitMQSpider
 
-class MultiDomainSpider(RabbitMQMixin, CrawlSpider):
+class MultiDomainSpider(RabbitMQSpider):
     name = 'multidomain'
 
     def parse(self, response):
