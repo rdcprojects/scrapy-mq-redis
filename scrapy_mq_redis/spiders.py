@@ -44,13 +44,14 @@ class RabbitMQMixin(object):
 
         :return: None
         """
+        self.crawler.engine.slot.scheduler.next_request()
         raise DontCloseSpider
+
+    def _set_crawler(self, crawler):
+        super(RabbitMQMixin, self)._set_crawler(crawler)
+        self.setup_rabbitmq()
 
 
 class RabbitMQSpider(RabbitMQMixin, Spider):
     """ Spider that reads urls from RabbitMQ queue when idle.
     """
-
-    def _set_crawler(self, crawler):
-        super(RabbitMQSpider, self)._set_crawler(crawler)
-        self.setup_rabbitmq()
