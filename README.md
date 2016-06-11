@@ -89,11 +89,36 @@ channel = connection.channel()
 
 channel.basic_publish(exchange='',
                       routing_key='spider:start_urls',
-                      body='</html>raw html contents<a href="http://twitter.com/roycehaynes">extract url</a></html>')
+                      body='http://example.com')
 
 connection.close()
 
 ```
+
+
+### Steps to add requests to requests queue (Optional)
+
+```
+import pika
+import pickle
+from scrapy.http import Request
+from scrapy.utils.reqser import request_to_dict
+​
+#Change the host and port as required
+conn = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=5672)
+channel = conn.channel()
+​
+​
+# Change the URL as required. Also, any extra data can be passed as meta argument
+req = Request("http://example.com", callback="parse")
+​
+​
+# Change the routing key as per the spider name
+msg=pickle.dumps(request_to_dict(req), protocol=-1)
+channel.basic_publish(exchange='', routing_key='spider:requests', body=msg)
+```
+
+This way the spider never dies and keeps on processing new requests.
 
 ## Contributing and Forking
 
