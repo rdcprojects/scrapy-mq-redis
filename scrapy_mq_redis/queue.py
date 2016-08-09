@@ -59,6 +59,7 @@ class SpiderQueue(Base):
 
         super(SpiderQueue, self).__init__(server, spider, key)
         self.spider.crawler.signals.connect(self.item_scraped, signal=signals.response_received)
+        self.spider.crawler.signals.connect(self.item_scraped, signal=signals.request_dropped)
 
     def __len__(self):
         """Return the length of the queue"""
@@ -85,10 +86,10 @@ class SpiderQueue(Base):
             return request
 
     def item_scraped(self, *args, **kwargs):
-        response = kwargs['response']
-        delivery_tag = response.meta['delivery_tag']
+        response = kwargs['request']
         from_queue = response.meta.get('from_queue', False)
         if from_queue:
+            delivery_tag = response.meta.get('delivery_tag')
             self.server.basic_ack(delivery_tag)
 
 
