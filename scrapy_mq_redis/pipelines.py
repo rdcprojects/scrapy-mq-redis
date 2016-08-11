@@ -3,6 +3,7 @@ __author__ = 'rdchawda'
 import connection
 
 from twisted.internet.threads import deferToThread
+from twisted.internet.defer import Deferred
 from scrapy.utils.serialize import ScrapyJSONEncoder
 
 EXCHANGE_NAME = ''
@@ -27,7 +28,7 @@ class RabbitMQPipeline(object):
         return cls.from_settings(crawler.settings)
 
     def process_item(self, item, spider):
-        return deferToThread(self._process_item, item, spider)
+        return Deferred().addCallback(self._process_item, item, spider)
 
     def _process_item(self, item, spider):
         key = self.item_key(item, spider)
