@@ -28,9 +28,6 @@ class RabbitMQPipeline(object):
         return cls.from_settings(crawler.settings)
 
     def process_item(self, item, spider):
-        return Deferred().addCallback(self._process_item, item, spider)
-
-    def _process_item(self, item, spider):
         key = self.item_key(item, spider)
         data = self.encoder.encode(item)
         self.server.basic_publish(exchange=self.exchange_name,
